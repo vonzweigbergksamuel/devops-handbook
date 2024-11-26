@@ -683,7 +683,7 @@ listen 443 ssl http2; # managed by Certbot
 
 <br>
 
-![Add http2](<Screenshot 2024-11-26 105725.png>)
+![Add http2](<img/Screenshot 2024-11-26 105725.png>)
 
 <br>
 
@@ -716,11 +716,11 @@ sudo systemctl restart nginx
 
 **Step 3 - Click the **Settings icon** on the SSH section and then select the `C:\Users\username\.ssh\config` file.**
 
-![Settings icon](<Screenshot 2024-11-26 111910.png>)
+![Settings icon](<img/Screenshot 2024-11-26 111910.png>)
 
 <br>
 
-![Config file selection](<Screenshot 2024-11-26 112121.png>)
+![Config file selection](<img/Screenshot 2024-11-26 112121.png>)
 
 <br>
 
@@ -737,13 +737,13 @@ IdentityFile C:\Users\username\.ssh\id_rsa (the path to your private key)
 
 **Example:**
 
-![Config file](image.png)
+![Config file](img/image.png)
 
 <br>
 
 **Step 5 - Click the **Connect to Host** button.**
 
-![Connect to server](<Screenshot 2024-11-26 113017.png>)
+![Connect to server](<img/Screenshot 2024-11-26 113017.png>)
 
 <br>
 
