@@ -130,6 +130,14 @@ ssh username@server_ip_address
 
 <br>
 
+**If it is your first time logging in as your new user, you may need to refernce the specific key you want to use:**
+
+```sh
+ssh -i C:\Users\username\.ssh\id_rsa username@server_ip_address
+```
+
+<br>
+
 ## Install Software
 
 ### Update and Upgrade System Packages
