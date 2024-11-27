@@ -11,7 +11,9 @@
     - [Enable External Access for Your Regular User](#enable-external-access-for-your-regular-user)
   - [Install Software](#install-software)
     - [Update and Upgrade System Packages](#update-and-upgrade-system-packages)
-  - [Setup Node Web Server (Start Here for CSCloud Setup)](#setup-node-web-server-start-here-for-cscloud-setup)
+  - [Setup Node Web Server (START HERE FOR LINNEAUS CSCloud SETUP)](#setup-node-web-server-start-here-for-linneaus-cscloud-setup)
+    - [Login to the server](#login-to-the-server)
+    - [Update and Upgrade System Packages](#update-and-upgrade-system-packages-1)
     - [Install Node.js](#install-nodejs)
     - [Install PM2](#install-pm2)
     - [Install Nginx](#install-nginx)
@@ -19,7 +21,7 @@
     - [Setup SSL with Cerbot](#setup-ssl-with-cerbot)
     - [Update HTTP v1.1 to v2](#update-http-v11-to-v2)
   - [Connect to the Server via VsCode](#connect-to-the-server-via-vscode)
-  - [Add and run an application (Last Step for Linneaus CSCloud Setup)](#add-and-run-an-application-last-step-for-linneaus-cscloud-setup)
+  - [Add and run an application (LAST STEP FOR LINNEAUS CSCloud SETUP)](#add-and-run-an-application-last-step-for-linneaus-cscloud-setup)
   - [Configure Nginx for Next.js](#configure-nginx-for-nextjs)
 
 <br>
@@ -130,14 +132,6 @@ ssh username@server_ip_address
 
 <br>
 
-**If it is your first time logging in as your new user, you may need to refernce the specific key you want to use:**
-
-```sh
-ssh -i C:\Users\username\.ssh\id_rsa username@server_ip_address
-```
-
-<br>
-
 ## Install Software
 
 ### Update and Upgrade System Packages
@@ -156,14 +150,164 @@ sudo apt upgrade
 
 <br>
 
-## Setup Node Web Server (Start Here for CSCloud Setup)
+---
+
+<br>
+
+## Setup Node Web Server (START HERE FOR LINNEAUS CSCloud SETUP)
 
 > [!NOTE]
 > This section is for setting up a Node.js web server with Nginx as a reverse proxy, pm2 as a process manager, and SSL with Let's Encrypt. **This is the setup to follow for Linneaus CSCloud servers.**
 
 <br>
 
-**If you have not already updated and upgraded your system packages, do so now:**
+### Login to the server
+
+**Your first time logging in?**
+
+> [!IMPORTANT]
+> You will need to reference the specific key you want to use:
+>
+> `C:\Users\username\.ssh\your-key-name` - The path to your private key, replace `username` with the name of your user and `your-key-name` with the name of your key.
+>
+> second `username` - The name of your user on the server (should be `ubuntu` on Linneaus CSCloud servers).
+>
+> `server_ip_address` - The IP address of your server.
+
+<br>
+
+```sh
+ssh -i C:\Users\username\.ssh\your-key-name username@server_ip_address
+```
+
+<br>
+
+**Already logged in once like above?**
+
+Then you should need to reference the key again. Instead you can use the following command in the future:
+
+```sh
+ssh username@server_ip_address
+```
+
+<br>
+
+**Having trouble logging in?**
+
+If you are having trouble logging in, you can try the following command to see what is going wrong:
+
+<br>
+
+Check if your ssh-agent is running:
+
+```sh
+ssh-agent -s
+```
+
+<br>
+
+If it is running, nothing will happen. You can then try to add your key to the ssh-agent:
+
+```sh
+ssh-add C:\Users\username\.ssh\id_rsa # Replace with the exact path to YOUR private key
+```
+
+<br>
+
+If you get an error, you need to activate the ssh-agent and add your key to it:
+
+<br>
+
+**For Windows (Powershell):**
+
+Step 1 - Open Powershell as an administrator
+
+<br>
+
+Step 2 - Set the ssh-agent service to start automatically and start the service
+
+```powershell
+Set-Service ssh-agent -StartupType Automatic
+Start-Service ssh-agent
+```
+
+<br>
+
+Step 3 - Verify that the service is running
+
+```powershell
+Get-Service ssh-agent
+```
+
+<br>
+
+Step 4 - Add your key to the ssh-agent
+
+```powershell
+ssh-add C:\Users\username\.ssh\your-key-name # Replace with the exact path to YOUR private key
+```
+
+<br>
+
+---
+
+<br>
+
+**For MacOS (Bash/Zsh):**
+
+Step 1 - Start the ssh-agent
+
+```sh
+eval "$(ssh-agent -s)"
+```
+
+<br>
+
+Step 2 - Make sure the .ssh directory has the correct permissions
+
+```sh
+chmod 700 ~/.ssh
+```
+
+<br>
+
+Step 3 - Create and edit the config file
+
+```sh
+nano ~/.ssh/config # Open the config file
+```
+
+<br>
+
+Add the following lines to the config file:
+
+```sh
+AddKeysToAgent yes
+UseKeychain yes
+```
+
+<br>
+
+Step 4 - Add your key to the ssh-agent
+
+```sh
+ssh-add --apple-use-keychain ~/.ssh/your-key-name # Replace with the exact path to YOUR private key
+```
+
+<br>
+
+Step 5 - Verify that the key was added
+
+```sh
+ssh-add -l
+```
+
+<br>
+
+### Update and Upgrade System Packages
+
+> [!NOTE]
+> When logged into the server the first step is to update and upgrade the system packages.
 
 ```sh
 sudo apt update
@@ -193,26 +337,26 @@ sudo apt-get install -y curl
 1. **Download the setup script:**
 
    ```sh
-    curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
+   curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
    ```
 
 2. **Run the setup script with sudo:**
 
    ```sh
-    sudo -E bash nodesource_setup.sh
+   sudo -E bash nodesource_setup.sh
    ```
 
 3. **Install Node.js:**
 
    ```sh
-    sudo apt-get install -y nodejs
+   sudo apt-get install -y nodejs
    ```
 
    **Verify the installation:**
 
    ```sh
-    node -v
-    npm -v
+   node -v
+   npm -v
    ```
 
    ```sh
@@ -252,7 +396,7 @@ sudo apt install nginx
 
 <br>
 
-**Step 2 - Adjust the Firewall**
+**Step 2 - Adjust the Firewall (Skip this step for Linneaus CSCloud servers, go to step 3):**
 
 > [!CAUTION]
 > Firewall adjusting is not required for Linneaus CSCloud servers. The firewall is already configured and you do not have access to it.
@@ -264,7 +408,7 @@ If you've followed the initial server setup guide, you should have a UFW firewal
 List the application configurations that ufw knows how to work with by typing:
 
 ```sh
-  sudo ufw app list
+sudo ufw app list
 ```
 
 <br>
@@ -296,16 +440,16 @@ It is recommended that you enable the most restrictive profile that will still a
 
 You can enable this by typing:
 
-```
-  sudo ufw allow 'Nginx HTTP'
+```sh
+sudo ufw allow 'Nginx HTTP'
 ```
 
 <br>
 
 You can verify the change by typing:
 
-```
-  sudo ufw status
+```sh
+sudo ufw status
 ```
 
 <br>
@@ -332,7 +476,7 @@ At the end of the installation process, Ubuntu starts Nginx. The web server shou
 
 You can check with the `systemctl` command:
 
-```
+```sh
 sudo systemctl status nginx
 ```
 
@@ -340,7 +484,7 @@ sudo systemctl status nginx
 
 You should see output similar to the following:
 
-```
+```sh
 #Output
 ● nginx.service - A high-performance web server and a reverse proxy server
     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
@@ -356,9 +500,12 @@ You should see output similar to the following:
 
 <br>
 
-You can access the default Nginx landing page to confirm that the software is running properly by navigating to your server’s IP address or domain name if you have added a domain. If you do not know your server’s IP address, you can find it by using the icanhazip.com tool, which will give you your public IP address as received from another location on the internet:
+> [!TIP]
+> You can access the default Nginx landing page to confirm that the software is running properly by navigating to your server’s IP address or domain name if you have added a domain. If you do not know your server’s IP address, you can find it by using the icanhazip.com tool, which will give you your public IP address as received from another location on the internet:
+>
+> **Linneaus students can find their server's Domain Name and IP Address on GitLab.**
 
-```
+```sh
 curl -4 icanhazip.com
 ```
 
@@ -366,8 +513,8 @@ curl -4 icanhazip.com
 
 After you have your server’s IP address, enter it into your web browser’s address bar:
 
-```
-http://your_server_ip
+```sh
+http://your_server_ip # IP address or domain name
 ```
 
 <br>
@@ -378,15 +525,22 @@ You will see the default Nginx landing page:
 
 <br>
 
-**Step 4 - Manage the Nginx Process**
+**Commands to Manage the Nginx Process**
 
 Now that Nginx is installed and running, you can interact with it using the `systemctl` command.
 
 <br>
 
+> [!TIP]
+> The following commands do not need to be used now but are useful for managing the Nginx process in the future.
+>
+> For example, if you make configuration changes to Nginx, you will need to restart the Nginx process to apply the changes.
+
+<br>
+
 To stop your web server, you can type:
 
-```
+```sh
 sudo systemctl stop nginx
 ```
 
@@ -394,7 +548,7 @@ sudo systemctl stop nginx
 
 To start the web server when it is stopped, type:
 
-```
+```sh
 sudo systemctl start nginx
 ```
 
@@ -402,7 +556,7 @@ sudo systemctl start nginx
 
 To stop and then start the service again, type:
 
-```
+```sh
 sudo systemctl restart nginx
 ```
 
@@ -410,7 +564,7 @@ sudo systemctl restart nginx
 
 If you are simply making configuration changes, Nginx can often reload without dropping connections. To do this, this command can be used:
 
-```
+```sh
 sudo systemctl reload nginx
 ```
 
@@ -418,7 +572,7 @@ sudo systemctl reload nginx
 
 By default, Nginx is configured to start automatically when the server boots. If this is not what you want, you can disable this behavior by typing:
 
-```
+```sh
 sudo systemctl disable nginx
 ```
 
@@ -426,7 +580,7 @@ sudo systemctl disable nginx
 
 To re-enable the service to start up at boot, you can type:
 
-```
+```sh
 sudo systemctl enable nginx
 ```
 
@@ -439,19 +593,19 @@ sudo systemctl enable nginx
 >
 > Install nano for easier file editing (optional but recommended):
 >
-> ```
+> ```sh
 > sudo apt-get install nano
 > ```
 >
 > Open the NGINX config file:
 >
-> ```
+> ```sh
 > sudo nano /etc/nginx/nginx.conf
 > ```
 >
 > Remove the # in front of "server_tokens off;":
 >
-> ```
+> ```sh
 > server_tokens off;
 > ```
 >
@@ -466,7 +620,7 @@ sudo systemctl enable nginx
 **Useful paths**
 
 - /etc/nginx/nginx.conf - Location of global config file
-- /etc/nginx/sites-available/default - Location of default server block config file.
+- /etc/nginx/sites-available - Directory for config files
 
 <br>
 
@@ -476,7 +630,7 @@ Go to the `/etc/nginx/sites-available` directory and create a new config file fo
 
 ```sh
 cd /etc/nginx/sites-available
-sudo touch cscloudX-XX.lnu.se
+sudo nano cscloudX-XX.lnu.se # Replace cscloudX-XX.lnu.se with your domain name
 ```
 
 <br>
@@ -484,18 +638,37 @@ sudo touch cscloudX-XX.lnu.se
 Create a symbolic link in the `/etc/nginx/sites-enabled` directory that points to the config file you just created in the `/etc/nginx/sites-available` directory:
 
 ```sh
-sudo ln -s /etc/nginx/sites-available/cscloudX-XX.lnu.se /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/cscloudX-XX.lnu.se /etc/nginx/sites-enabled/ # Replace cscloudX-XX.lnu.se with your domain name
 ```
 
 <br>
 
-**Populate the config file in "sites-available"**
+**Remove the default file**
+
+Remove the default file in the `/etc/nginx/sites-available` directory:
+
+```sh
+cd /etc/nginx/sites-available
+sudo rm default
+```
+
+<br>
+
+Remove the symbolic link to the default file in the `/etc/nginx/sites-enabled` directory:
+
+```sh
+cd /etc/nginx/sites-enabled
+sudo rm default
+```
+
+<br>
+
+**Populate the config file you created in "sites-available"**
 
 Go into the config file you just created:
 
 ```sh
-cd /etc/nginx/sites-available
-sudo nano cscloudX-XX.lnu.se
+sudo nano /etc/nginx/sites-available/cscloudX-XX.lnu.se # Replace cscloudX-XX.lnu.se with your domain name
 ```
 
 <br>
@@ -504,23 +677,13 @@ Add the following configuration to the file (replace `cscloudX-XX.lnu.se` with y
 
 ```nginx
 server {
-        server_name cscloudX-XX.lnu.se;
-        index index.html;
+        server_name cscloudX-XX.lnu.se; # This is the server name, it should match your domain name
+        index index.html index.htm index.nginx-debian.html;
 
         root /var/www/html;
 
         location / { # This is the location block, it tells Nginx how to handle requests to the server
-                proxy_pass http://localhost:3000/;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade             $http_upgrade;
-                proxy_set_header Connection          'upgrade';
-
-                proxy_set_header Host                 $host;
-                proxy_set_header X-Real-IP            $remote_addr;
-                proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto    $scheme;
-                proxy_set_header X-Forwarded-Host     $host;
-                proxy_set_header X-Forwarded-Port     $server_port;
+                try_files $uri $uri/ =404;
         }
 }
 ```
@@ -533,27 +696,17 @@ If you have other routes in your application, you can add them to the config fil
 
 ```nginx
 server {
-        server_name cscloudX-XX.lnu.se;
-        index index.html;
+        server_name cscloudX-XX.lnu.se; # This is the server name, it should match your domain name
+        index index.html index.htm index.nginx-debian.html;
 
         root /var/www/html;
 
         location / { # This is the root location block
-                proxy_pass http://localhost:3000/;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade             $http_upgrade;
-                proxy_set_header Connection          'upgrade';
-
-                proxy_set_header Host                 $host;
-                proxy_set_header X-Real-IP            $remote_addr;
-                proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto    $scheme;
-                proxy_set_header X-Forwarded-Host     $host;
-                proxy_set_header X-Forwarded-Port     $server_port;
+                try_files $uri $uri/ =404;
         }
 
-        location /api/ { # This is the location block for the /api route
-                proxy_pass http://localhost:3001/; # This will pass requests to the /api route to port 3001
+        location /crud-app/ { # This is the location block for the /crud-app route
+                proxy_pass http://localhost:3001/; # This will pass requests to the /crud-app route to port 3001
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade             $http_upgrade;
                 proxy_set_header Connection          'upgrade';
@@ -604,6 +757,17 @@ sudo certbot --nginx
 
 <br>
 
+> [!NOTE]
+> Follow the prompts to install the SSL certificate.
+>
+> You will need to choose the domain name to install the certificate on or enter it manually.
+>
+> For Linneaus CSCloud servers, you will need to enter the domain name you were given on GitLab.
+>
+> You will also have to enter your email address and agree to the terms of service.
+
+<br>
+
 **Step 5 - Test the automatic renewal:**
 
 ```sh
@@ -620,15 +784,28 @@ Navigate to your domain in a web browser and confirm that the SSL certificate is
 
 **This is how the file should look after installing the SSL certificate:**
 
+Display it with the following command:
+
+```sh
+cat /etc/nginx/sites-available/cscloudX-XX.lnu.se # Replace cscloudX-XX.lnu.se with your domain name
+```
+
+<br>
+
 ```nginx
+# Output
 server {
-        server_name cscloudX-XX.lnu.se;
-        index index.html;
+        server_name cscloudX-XX.lnu.se; # This is the server name, it should match your domain name
+        index index.html index.htm index.nginx-debian.html;
 
         root /var/www/html;
 
-        location / {
-                proxy_pass http://localhost:3000/;
+        location / { # This is the root location block
+                try_files $uri $uri/ =404;
+        }
+
+        location /crud-app/ { # This is the location block for the /crud-app route
+                proxy_pass http://localhost:3001/; # This will pass requests to the /crud-app route to port 3001
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade             $http_upgrade;
                 proxy_set_header Connection          'upgrade';
@@ -664,7 +841,9 @@ server {
 <br>
 
 > [!NOTE]
-> All parts of the file that are managed by Certbot are marked with a comment. These parts should not be edited manually. (The one exception is when adding HTTP v2 support, which is covered in the next section.)
+> All parts of the file that are managed by Certbot are marked with a comment. These parts should not be edited manually.
+>
+> The one exception is when adding **HTTP v2** support, which is covered in the next section.
 
 <br>
 
@@ -673,7 +852,7 @@ server {
 **Step 1 - Open the sites-available config file:**
 
 ```sh
-sudo nano /etc/nginx/sites-available/cscloudX-XX.lnu.se
+sudo nano /etc/nginx/sites-available/cscloudX-XX.lnu.se # Replace cscloudX-XX.lnu.se with your domain name
 ```
 
 <br>
@@ -685,11 +864,19 @@ sudo nano /etc/nginx/sites-available/cscloudX-XX.lnu.se
 
 <br>
 
+Add the line `http2` to the `listen 443 ssl;` block:
+
 ```nginx
-listen 443 ssl http2; # managed by Certbot
+  # Before
+  listen 443 ssl; # managed by Certbot
+
+  # After
+  listen 443 ssl http2; # managed by Certbot
 ```
 
 <br>
+
+Example:
 
 ![Add http2](<img/Screenshot 2024-11-26 105725.png>)
 
@@ -755,7 +942,7 @@ IdentityFile C:\Users\username\.ssh\id_rsa (the path to your private key)
 
 <br>
 
-## Add and run an application (Last Step for Linneaus CSCloud Setup)
+## Add and run an application (LAST STEP FOR LINNEAUS CSCloud SETUP)
 
 **Step 1 - Connect to the server via VsCode. (Refer to the previous section for instructions.)**
 
@@ -793,7 +980,7 @@ cd myapp
 <br>
 
 ```sh
-sudo chown -R username:username /var/www/myapp
+sudo chown -R username:username /var/www/myapp # Replace username with the name of your user (most likely ubuntu on Linneaus CSCloud servers)
 ```
 
 <br>
@@ -821,7 +1008,7 @@ npm install
 module.exports = {
   apps: [
     {
-      name: "myapp", // Name of your application, can be anything
+      name: "crud-app", // Name of your application, can be anything
       script: "./src/app.js", // Path to your main application file
       env: {
         NODE_ENV: "production", // Set the environment to production (should always be set to production when deploying publicly)
@@ -847,8 +1034,8 @@ module.exports = {
 Example:
 
 ```nginx
-        location /api/ { # This is the location block for the /api route
-                proxy_pass http://localhost:3001/; # This will pass requests to the /api route to port 3001
+        location /crud-app/ { # This is the location block for the /crud-app route
+                proxy_pass http://localhost:3001/; # This will pass requests to the /crud-app route to port 3001
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade             $http_upgrade;
                 proxy_set_header Connection          'upgrade';
@@ -868,7 +1055,7 @@ Example:
 module.exports = {
   apps: [
     {
-      name: "myapp",
+      name: "crud-app",
       script: "./src/app.js",
       env: {
         NODE_ENV: "production",
