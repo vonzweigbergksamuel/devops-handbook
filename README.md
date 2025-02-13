@@ -1,4 +1,4 @@
-# Step by Step Guide to Setting Up and Configuring a Server
+# Step by Step Guide to Setting Up and Configuring a Virtual Private Server (VPS)
 
 > [!NOTE]
 > **Only Ubuntu as of now.**
