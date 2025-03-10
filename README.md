@@ -9,4 +9,6 @@ This repository contains a step by step guide to setting up and configuring a se
 
 <br>
 
-Go to the `ubuntu.md` file to find the guide.
+## Linneaus CSCloud Server Guide:
+
+[linneaus.md](linneaus.md)
