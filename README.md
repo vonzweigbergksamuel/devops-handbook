@@ -21,9 +21,9 @@ This repository also contains a guide for Linneaus students on how to set up and
 
 ## Ubuntu Guides:
 
-[general](ubuntu/general.md)
+[general.md](ubuntu/general.md)
 
-[nextjs](ubuntu/nextjs.md)
+[nextjs.md](ubuntu/nextjs.md)
 
 <br>
 
