@@ -29,7 +29,7 @@ This repository also contains a guide for Linneaus students on how to set up and
 
 ## General SSH Guide:
 
-[ssh](ssh.md)
+[ssh.md](ssh.md)
 
 <br>
 
