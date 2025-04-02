@@ -691,7 +691,7 @@ Add the line `http2` to the `listen 443 ssl;` block:
 
 Example:
 
-![Add http2](<img/Screenshot 2024-11-26 105725.png>)
+![Add http2](</img/Screenshot 2024-11-26 105725.png>)
 
 <br>
 
@@ -726,15 +726,15 @@ sudo systemctl restart nginx
 
 If you have already added a host to your ssh config file your server should show up in the list of hosts. 
 
-![Hosts](<img/Screenshot 2024-11-26 113017.png>)
+![Hosts](</img/Screenshot 2024-11-26 113017.png>)
 
 <br>
 
 If not, you can add a host by clicking the gear icon in the Remote Explorer sidebar and select your config file.
 
-![Settings icon](<img/Screenshot 2024-11-26 111910.png>)
+![Settings icon](</img/Screenshot 2024-11-26 111910.png>)
 
-![Config file selection](<img/Screenshot 2024-11-26 112121.png>)
+![Config file selection](</img/Screenshot 2024-11-26 112121.png>)
 
 **Configure the file to connect to your server:**
 
@@ -747,13 +747,13 @@ IdentityFile C:\Users\username\.ssh\id_rsa (the path to your private key)
 
 **Example:**
 
-![Config file](img/image.png)
+![Config file](/img/image.png)
 
 <br>
 
 **Step 4** - Click the **Connect to Host** button.
 
-![Connect to server](<img/Screenshot 2024-11-26 113017.png>)
+![Connect to server](</img/Screenshot 2024-11-26 113017.png>)
 
 <br>
 
@@ -895,3 +895,46 @@ pm2 start ecosystem.config.cjs
 ```
 
 <br>
+
+**Step 10** - Check the status of your application:
+
+```sh
+pm2 status
+```
+
+<br>
+You should see your application listed with a status of "online".
+
+```sh
+# Example Output
+┌─────┬────────────┬────────┬───┬──────┬──────────┬──────────┬──────────────┐
+│ id  │ name       │ mode   │ ↺ │status│ cpu      │ mem      │ user         │
+├─────┼────────────┼────────┼───┼──────┼──────────┼──────────┼──────────────┤
+│ 0   │ crud-app   │ fork   │ 0 │online│ 0.0%     │ 50.1 MB  │ ubuntu       │
+└─────┴────────────┴────────┴───┴──────┴──────────┴──────────┴──────────────┘
+```
+
+<br>
+
+**Step 11** - Save the PM2 process:
+
+```sh
+pm2 save
+```
+<br>
+
+**Step 12** - Set PM2 to start on boot:
+
+```sh
+pm2 startup
+```
+
+<br>
+
+> [!IMPORTANT]
+> Follow the instructions that PM2 gives you to set it up. This usually involves running a command with `sudo` that PM2 provides.
+> 
+> When adding a new application, you will need to run the `pm2 save` command again to save the new application to the PM2 process list and have it start on boot.
+
+<br>
+

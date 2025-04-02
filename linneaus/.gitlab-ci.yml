@@ -1,0 +1,79 @@
+# GitLab CI/CD configuration file for 1dv613 project course
+# This file defines the CI/CD pipeline for building, testing, and deploying the application.
+
+# Words starting with "$" are replaced with the corresponding environment variable values set in GitLab CI/CD settings.
+# Remember to add your variables in the GitLab CI/CD settings!
+
+# Script to run before deploy-job
+.before_script_ssh_setup: &before_script_ssh_setup
+  - apk update && apk add openssh-client
+  - eval $(ssh-agent -s)
+  - chmod 600 "$SSH_PRIVATE_KEY"
+  - ssh-add "$SSH_PRIVATE_KEY"
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan -H ${REMOTE_HOST} >> ~/.ssh/known_hosts
+
+image: docker:27-cli
+
+stages:
+  - lint
+  - build
+  - deploy
+
+# Code linting
+lint-job:
+  stage: lint
+  image:
+    name: node:20-bullseye
+    entrypoint: [""]
+  script:
+    - echo "Linting..."
+    - npm install
+    - npm run lint
+
+# Build the application using Docker and Kaniko - this depends on a Dockerfile being present in the root of the repository
+build-job:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [""]
+  script:
+    - echo "Building Docker image with Kaniko..."
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile" --destination "${CI_REGISTRY_IMAGE}/<application_name>:latest" # Replace <application_name> with the actual application name
+
+# Deploy the application to the remote server using SSH
+deploy-job:
+  stage: deploy
+  environment:
+    name: production
+    url: http://$REMOTE_HOST
+  variables:
+    REMOTE_HOST: $REMOTE_HOST
+    NAME: "test"
+  before_script: *before_script_ssh_setup
+  script:
+    - |
+      ssh -v ubuntu@$REMOTE_HOST "
+        # Login to registry
+        docker login -u $CI_REGISTRY_USER -p '$CI_REGISTRY_PASSWORD' $CI_REGISTRY
+        
+        # Pull new image
+        docker pull $CI_REGISTRY_IMAGE/<application_name>:latest # Replace <application_name> with the actual application name
+        
+        # Stop and remove existing container
+        docker stop $NAME || true
+        docker rm $NAME || true
+        
+        # Run new container with environment variables - remember to add variables needed by your application
+        docker run -d \
+          --name $NAME \
+          -p 3000:3000 \
+          --restart unless-stopped \
+          $CI_REGISTRY_IMAGE/<application_name>:latest # Replace <application_name> with the actual application name
+        
+        # Verify deployment
+        docker ps | grep $NAME
+      "
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"

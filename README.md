@@ -13,9 +13,11 @@ This repository also contains a guide for Linneaus students on how to set up and
 
 <br>
 
-## Linneaus CSCloud Server Guide:
+## Linneaus Guides:
 
-[linneaus.md](linneaus.md)
+[cscloud.md](/linneaus/cscloud.md)
+
+[1dv613-pipeline](/linneaus/.gitlab-ci.yml)
 
 <br>
 
@@ -27,7 +29,15 @@ This repository also contains a guide for Linneaus students on how to set up and
 
 <br>
 
-## General SSH Guide:
+## Docker Guides:
+
+[docker.md](docker/docker.md)
+
+[Dockerfile](docker/Dockerfile) example
+
+<br>
+
+## SSH Guide:
 
 [ssh.md](ssh.md)
 
@@ -35,7 +45,7 @@ This repository also contains a guide for Linneaus students on how to set up and
 
 ## More to come...
 
-<ins>docker</ins>
+<ins>Pipelines</ins>
 
 <ins>dockploy</ins>
 
