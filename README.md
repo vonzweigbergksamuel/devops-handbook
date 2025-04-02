@@ -1,52 +1,36 @@
-# Setting Up and Configuring a Virtual Private Server (VPS)
+# DevOps Handbook
 
 > [!NOTE]
-> **Only Ubuntu as of now.**
-> 
-> This repo is a work in progress!
+> Currently focused on Ubuntu-based environments.
+> This repository is a work in progress.
+
+A collection of practical guides covering infrastructure management, containerization, and CI/CD pipelines. All guides are written in markdown and focused on real-world usage.
 
 <br>
 
-This repository contains step by step guides, written in markdown, about setting up and configuring a virtual private server (VPS). The guides are separated into different files and folders based on what they cover. As of now, the guides are only for Ubuntu and specific configurations.
+## Topics Covered
 
-This repository also contains a guide for Linneaus students on how to set up and configure the CSCloud server that they get access to during the courses: 1dv025, 1dv026, and 1dv027.
-
-<br>
-
-## Linneaus Guides:
-
-[cscloud.md](/linneaus/cscloud.md)
-
-[1dv613-pipeline](/linneaus/.gitlab-ci.yml)
+### 🎓 Linneaus Guides - Web Developers
+- [CSCloud Setup](linneaus/cscloud.md) - For all courses using CSCloud machines
+- [GitLab Pipeline Example](linneaus/.gitlab-ci.yml) - For course 1dv613
 
 <br>
 
-## Ubuntu Guides:
-
-[general.md](ubuntu/general.md)
-
-[nextjs.md](ubuntu/nextjs.md)
-
-<br>
-
-## Docker Guides:
-
-[docker.md](docker/docker.md)
-
-[Dockerfile](docker/Dockerfile) example
+### Infrastructure
+- [SSH Configuration](infrastructure/ssh/ssh.md)
+- [VPS General Setup](infrastructure/vps/general.md)
+- [Next.js Setup](infrastructure/vps/nextjs.md)
 
 <br>
 
-## SSH Guide:
-
-[ssh.md](ssh.md)
+### Containers
+- [Docker Guide](containers/docker/docker.md)
+- [Dockerfile Example](containers/docker/Dockerfile)
 
 <br>
 
-## More to come...
-
-<ins>Pipelines</ins>
-
-<ins>dockploy</ins>
-
-<ins>coolify</ins>
+## Coming Soon
+- Kubernetes
+- CI/CD Patterns
+- dockploy
+- coolify

@@ -637,7 +637,7 @@ Add the line `http2` to the `listen 443 ssl;` block:
 
 Example:
 
-![Add http2](<../img/Screenshot 2024-11-26 105725.png>)
+![Add http2](<../../img/Screenshot 2024-11-26 105725.png>)
 
 <br>
 
@@ -672,15 +672,15 @@ sudo systemctl restart nginx
 
 If you have already added a host to your ssh config file your server should show up in the list of hosts. 
 
-![Hosts](<../img/Screenshot 2024-11-26 113017.png>)
+![Hosts](<../../img/Screenshot 2024-11-26 113017.png>)
 
 <br>
 
 If not, you can add a host by clicking the gear icon in the Remote Explorer sidebar and select your config file.
 
-![Settings icon](<../img/Screenshot 2024-11-26 111910.png>)
+![Settings icon](<../../img/Screenshot 2024-11-26 111910.png>)
 
-![Config file selection](<../img/Screenshot 2024-11-26 112121.png>)
+![Config file selection](<../../img/Screenshot 2024-11-26 112121.png>)
 
 **Configure the file to connect to your server:**
 
@@ -693,13 +693,13 @@ IdentityFile C:\Users\username\.ssh\id_rsa (the path to your private key)
 
 **Example:**
 
-![Config file](../img/image.png)
+![Config file](../../img/image.png)
 
 <br>
 
 4. Click the **Connect to Host** button.
 
-![Connect to server](<../img/Screenshot 2024-11-26 113017.png>)
+![Connect to server](<../../img/Screenshot 2024-11-26 113017.png>)
 
 <br>
 
