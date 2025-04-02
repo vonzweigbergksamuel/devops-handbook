@@ -28,9 +28,10 @@ lint-job:
     name: node:20-bullseye
     entrypoint: [""]
   script:
+    - echo "Installing dependencies..."
+    - npx install-peerdeps --dev @lnu/eslint-config # Update this to your own ESLint config if needed
     - echo "Linting..."
-    - npm install
-    - npm run lint
+    - npx eslint "src/**/*.js" || exit 1 # or .ts if using TypeScript
 
 # Build the application using Docker and Kaniko - this depends on a Dockerfile being present in the root of the repository
 build-job:
@@ -41,6 +42,8 @@ build-job:
   script:
     - echo "Building Docker image with Kaniko..."
     - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile" --destination "${CI_REGISTRY_IMAGE}/<application_name>:latest" # Replace <application_name> with the actual application name
+  needs:
+    - lint-job
 
 # Deploy the application to the remote server using SSH
 deploy-job:
@@ -77,3 +80,5 @@ deploy-job:
       "
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - build-job
