@@ -21,9 +21,10 @@
 2. Enter the following command:
 
 Replace `some_comment` with a comment that will help you identify the key later. If used for GitHub, use your GitHub email address.
+Replace `my_custom_keyname` with the desired name of the ssh-key.
 
 ```sh
-ssh-keygen -t ed25519 -C "some_comment"
+ssh-keygen -t ed25519 -C "some_comment" -f ~/.ssh/my_custom_keyname
 ```
 
 <br>
