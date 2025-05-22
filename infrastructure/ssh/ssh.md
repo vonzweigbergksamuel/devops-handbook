@@ -29,7 +29,7 @@ ssh-keygen -t ed25519 -C "some_comment" -f ~/.ssh/my_custom_keyname
 
 <br>
 
-Optionally skip the `-C` flag to not add a comment.
+Optionally skip the `-C` flag to not add a comment and skip the filename part.
 
 ```sh
 ssh-keygen -t ed25519
