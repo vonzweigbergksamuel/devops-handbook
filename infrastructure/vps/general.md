@@ -263,6 +263,23 @@ You should see output similar to the following:
 
 <br>
 
+3. - Configure Firewall for Nginx:
+
+Allow connections via HTTP & HTTPS with the following command.
+
+```sh
+sudo ufw allow 'Nginx Full'
+```
+
+or with the following two commands
+
+```sh
+sudo ufw allow http
+sudo ufw allow https
+```
+
+<br>
+
 > [!TIP]
 > You can access the default Nginx landing page to confirm that the software is running properly by navigating, in the browser, to your server’s IP address or domain name.
 
