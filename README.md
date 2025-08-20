@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > Currently focused on Ubuntu-based environments.
-> This repository is a work in progress.
+> This repository is currently a work in progress.
 
 A collection of practical guides covering infrastructure management, containerization, and CI/CD pipelines. All guides are written in markdown and focused on real-world usage.
 
