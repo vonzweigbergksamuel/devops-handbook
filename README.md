@@ -16,16 +16,26 @@ A collection of practical guides covering infrastructure management, containeriz
 
 <br>
 
-### Infrastructure
-- [SSH Configuration](infrastructure/ssh/ssh.md)
-- [VPS General Setup](infrastructure/vps/general.md)
-- [Next.js Setup](infrastructure/vps/nextjs.md)
+### SSH
+- [SSH Configuration](ssh/ssh.md)
+
+<br>
+
+### Platform Operations
+- [VPS General Setup](platform/vps/general.md)
+- [Next.js Setup](platform/vps/nextjs.md)
 
 <br>
 
 ### Containers
 - [Docker Guide](containers/docker/docker.md)
 - [Dockerfile Example](containers/docker/Dockerfile)
+
+<br>
+
+### Infrastructure as Code
+- Terraform (coming soon)
+- Ansible (coming soon)
 
 <br>
 

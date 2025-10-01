@@ -24,12 +24,12 @@ Replace `some_comment` with a comment that will help you identify the key later.
 Replace `my_custom_keyname` with the desired name of the ssh-key.
 
 ```sh
-ssh-keygen -t ed25519 -C "some_comment" -f ~/.ssh/my_custom_keyname
+ssh-keygen -t ed25519 -f ~/.ssh/my_custom_keyname
 ```
 
 <br>
 
-Optionally skip the `-C` flag to not add a comment and skip the `-f` flag to not add specific filename.
+Optionally add the `-C "some_comment"` flag to add a comment. You could also skip the `-f` flag to not add specific filename.
 
 ```sh
 ssh-keygen -t ed25519
