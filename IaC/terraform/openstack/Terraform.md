@@ -90,7 +90,7 @@ This is the **main configuration file**. Every setting goes here. You only modif
 
 variable "subnetwork_cidr" {
   type    = string
-  default = "10.0.0.0/24"
+  default = "192.168.4.0/24"
   # Change this if you want a different internal network range
 }
 
